@@ -1,0 +1,9 @@
+update provider_config set value='Teams, Attribute Exchange, Simple Registration' where name='openid' and option='enabled extensions';
+insert into provider_config values ('openid','default allowed attributes','["*"]');
+insert into provider_config values ('openid','default attribute mapping','[["*", "*"]]');
+insert into provider_config values ('openid','trusted roots','');
+insert into provider_config values ('openid','untrusted roots','');
+insert into login_config values ('fas','FAS url','{{ ipsilon_fas_backend }}');
+insert into login_config values ('fas','help text','Login with your {{ ipsilon_fas_backend }} credentials');
+insert into login_config values ('fas','username text','ACO username');
+

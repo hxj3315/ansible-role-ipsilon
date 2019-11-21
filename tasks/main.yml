@@ -1,1 +1,126 @@
 # Defaults tasks for role ipsilon
+- include_role:
+    name: mysql
+
+- name: Creating mandatory (local) DB 
+  include_role: 
+    name: mysql
+    tasks_from: db
+  vars:
+    mysql_db_user: "{{ ipsilon_db_user }}"
+    mysql_db_pass: "{{ ipsilon_db_pass }}"
+    mysql_db_name: "{{ ipsilon_db_name }}"
+  tags:
+    - db
+
+- name: Installing required packages
+  yum:
+    name: "{{ ipsilon_packages}}"
+    state: latest
+  tags:
+    - packages
+
+- name: Initializing ipsilon if needed
+  command: "ipsilon-server-install --admin-user admin --secure yes --openid yes --saml2 yes --openidc no --fas yes --database-url mysql://{{ ipsilon_db_user }}:{{ ipsilon_db_pass }}@localhost/ipsilon --hostname {{ ipsilon_httpd_hostname }}"
+  args:
+    creates: /etc/ipsilon/idp/ipsilon.conf
+  no_log: True
+  register: ipsilon_install
+  tags:
+    - init
+
+- name: Importing template for ipsilon DB
+  template:
+    src: ipsilon-db-cfg.sql.j2
+    dest: /etc/ipsilon/idp/ipsilon-db-cfg.sql
+  register: ipsilon_db_cfg 
+  when: ipsilon_install is changed
+  tags:
+    - init
+
+- name: Configuring ipsilon DB from template
+  mysql_db:
+    name: "{{ ipsilon_db_name }}"
+    state: import
+    target: /etc/ipsilon/idp/ipsilon-db-cfg.sql
+  when: ipsilon_db_cfg is changed
+  tags:
+    - init
+
+- name: Ipsilon admins template
+  template:
+    src: ipsilon-admins.sql.j2
+    dest: /etc/ipsilon/idp/ipsilon-admins.sql
+  register: ipsilon_admins 
+  tags:
+    - init
+    - admins
+
+- name: Configuring ipsilon admins
+  mysql_db:
+    name: "{{ ipsilon_db_name }}"
+    state: import
+    target: /etc/ipsilon/idp/ipsilon-admins.sql
+  when: ipsilon_admins is changed
+  tags:
+    - init
+    - admins
+  
+- name: Configuring httpd
+  import_role:
+    name: httpd
+  vars:
+    httpd_tls: "{{ ipsilon_httpd_tls }}"
+
+- name: Configuring httpd vhost
+  template:
+    src: 02_ipsilon_vhost.conf.j2
+    dest: /etc/httpd/conf.d/02_ipsilon_vhost.conf
+  notify:
+    - restart_httpd
+
+- name: Configuring https
+  template:
+    src: "{{ item }}.j2"
+    dest: "/etc/httpd/conf.d/{{ item }}"
+  notify:
+    - restart_httpd
+  with_items:
+    - ssl-ipsilon-vhost.conf
+  when: ipsilon_httpd_tls  
+   
+- import_role:
+    name: httpd
+    tasks_from: pki-tls
+  vars:
+    pki_hostname: "{{ ipsilon_httpd_hostname }}"
+  notify:
+    - restart_httpd
+  tags:
+    - tls
+  when: ipsilon_httpd_tls
+
+- name: Branding ipsilon with logo
+  copy:
+    src: centos_logo.png
+    dest: "{{ item }}"
+  with_items:
+    - /usr/share/ipsilon/ui/img/brand-lg.png
+    - /usr/share/ipsilon/ui/img/brand.png
+
+- name: Distributing openidc genkey script
+  copy:
+    src: genkey.py
+    dest: /var/lib/ipsilon/idp/genkey.py
+    mode: 0755
+
+- name: Ensuring backup user and jobs
+  include_role:
+    name: centos-backup
+    tasks_from: client
+  vars:
+    - centos_role: ipsilon
+    - role_backup_folders:
+        - /var/lib/ipsilon 
+  tags:
+    - backup

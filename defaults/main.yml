@@ -1,1 +1,27 @@
 # Defaults variables for role ipsilon
+
+# mysql settings
+ipsilon_db_user: ipsilon
+ipsilon_db_pass: FindItYourSelf
+ipsilon_db_name: ipsilon
+
+# Httpd settings
+# Do we want TLS ?
+ipsilon_httpd_tls: True
+ipsilon_httpd_hostname: "{{ inventory_hostname }}"
+
+# ipsilon settings
+ipsilon_packages:
+  - ipsilon
+  - ipsilon-authfas
+  - ipsilon-openid
+  - ipsilon-saml2
+  - ipsilon-openidc
+  - MySQL-python
+  - python-setuptools
+
+# Important to end the fas backend url with /
+ipsilon_fas_backend: https://accounts.dev.centos.org/
+ipsilon_admins:
+  - admin
+  - arrfab

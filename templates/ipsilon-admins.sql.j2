@@ -1,0 +1,3 @@
+{% for admin in ipsilon_admins %}
+insert ignore into users (name,option,value) values ('{{ admin }}','is_admin','1');
+{% endfor %}
