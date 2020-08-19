@@ -76,6 +76,7 @@
   template:
     src: 02_ipsilon_vhost.conf.j2
     dest: /etc/httpd/conf.d/02_ipsilon_vhost.conf
+    mode: 0644
   notify:
     - restart_httpd
 
@@ -83,6 +84,7 @@
   template:
     src: "{{ item }}.j2"
     dest: "/etc/httpd/conf.d/{{ item }}"
+    mode: 0644
   notify:
     - restart_httpd
   with_items:
@@ -104,6 +106,7 @@
   copy:
     src: centos_logo.png
     dest: "{{ item }}"
+    mode: 0644
   with_items:
     - /usr/share/ipsilon/ui/img/brand-lg.png
     - /usr/share/ipsilon/ui/img/brand.png
