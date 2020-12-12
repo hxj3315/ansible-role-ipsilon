@@ -1,5 +1,5 @@
 <VirtualHost *:443>
- ServerAdmin webmaster@centos.org
+ ServerAdmin webmaster@rockylinux.org
  ServerName {{ ipsilon_httpd_hostname }}
  DocumentRoot /var/www/html
 
@@ -31,7 +31,7 @@ SSLCertificateChainFile /etc/pki/tls/certs/{{ ipsilon_httpd_hostname }}-CAChain.
 SetEnvIf User-Agent ".*MSIE.*" \
          nokeepalive ssl-unclean-shutdown \
          downgrade-1.0 force-response-1.0
-CustomLog logs/ssl-seven.centos.org_request.log \
+CustomLog logs/ssl-seven.rockylinux.org.org_request.log \
           "%t %h %{SSL_PROTOCOL}x %{SSL_CIPHER}x \"%r\" %b"
 </VirtualHost>                               
 

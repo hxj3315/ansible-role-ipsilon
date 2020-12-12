@@ -1,16 +1,17 @@
+---
 # Defaults variables for role ipsilon
 
 # mysql settings
 ipsilon_db_user: ipsilon
-ipsilon_db_pass: FindItYourSelf
+ipsilon_db_pass: ThisIsNotThePassword
 ipsilon_db_name: ipsilon
 
 # Httpd settings
-# Do we want TLS ?
-ipsilon_httpd_tls: True
+# TLS and hostname
+ipsilon_httpd_tls: true
 ipsilon_httpd_hostname: "{{ inventory_hostname }}"
 
-# ipsilon settings
+# The list of ipsilon packages
 ipsilon_packages:
   - ipsilon
   - ipsilon-authfas
@@ -21,7 +22,8 @@ ipsilon_packages:
   - python-setuptools
 
 # Important to end the fas backend url with /
-ipsilon_fas_backend: https://accounts.dev.centos.org/
+# Note: We do not use FAS
+ipsilon_fas_backend: https://accounts.rockylinux.org/
 ipsilon_admins:
   - admin
-  - arrfab
+  - label

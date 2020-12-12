@@ -1,9 +1,10 @@
+---
 # Defaults tasks for role ipsilon
 - include_role:
     name: mysql
 
-- name: Creating mandatory (local) DB 
-  include_role: 
+- name: Creating mandatory (local) DB
+  include_role:
     name: mysql
     tasks_from: db
   vars:
@@ -13,6 +14,7 @@
   tags:
     - db
 
+# TODO: Get the repo
 - name: Installing required packages
   yum:
     name: "{{ ipsilon_packages}}"
@@ -20,11 +22,24 @@
   tags:
     - packages
 
+# FAS Disabled
 - name: Initializing ipsilon if needed
-  command: "ipsilon-server-install --admin-user admin --secure yes --openid yes --saml2 yes --openidc no --fas yes --database-url mysql://{{ ipsilon_db_user }}:{{ ipsilon_db_pass }}@localhost/ipsilon --hostname {{ ipsilon_httpd_hostname }}"
+  command: >
+    ipsilon-server-install
+    --admin-user admin
+    --secure yes
+    --openid yes
+    --saml2 yes
+    --openidc no
+    --fas no
+    --ipa yes
+    --info-sssd yes
+    --form yes
+    --database-url mysql://{{ ipsilon_db_user }}:{{ ipsilon_db_pass }}@localhost/ipsilon
+    --hostname {{ ipsilon_httpd_hostname }}
   args:
     creates: /etc/ipsilon/idp/ipsilon.conf
-  no_log: True
+  no_log: true
   register: ipsilon_install
   tags:
     - init
@@ -33,7 +48,7 @@
   template:
     src: ipsilon-db-cfg.sql.j2
     dest: /etc/ipsilon/idp/ipsilon-db-cfg.sql
-  register: ipsilon_db_cfg 
+  register: ipsilon_db_cfg
   when: ipsilon_install is changed
   tags:
     - init
@@ -51,7 +66,7 @@
   template:
     src: ipsilon-admins.sql.j2
     dest: /etc/ipsilon/idp/ipsilon-admins.sql
-  register: ipsilon_admins 
+  register: ipsilon_admins
   tags:
     - init
     - admins
@@ -65,7 +80,7 @@
   tags:
     - init
     - admins
-  
+
 - name: Configuring httpd
   import_role:
     name: httpd
@@ -89,8 +104,8 @@
     - restart_httpd
   with_items:
     - ssl-ipsilon-vhost.conf
-  when: ipsilon_httpd_tls  
-   
+  when: ipsilon_httpd_tls
+
 - import_role:
     name: httpd
     tasks_from: pki-tls
@@ -104,7 +119,7 @@
 
 - name: Branding ipsilon with logo
   copy:
-    src: centos_logo.png
+    src: rocky_logo.png
     dest: "{{ item }}"
     mode: 0644
   with_items:
@@ -119,11 +134,11 @@
 
 - name: Ensuring backup user and jobs
   include_role:
-    name: centos-backup
+    name: rocky-backup
     tasks_from: client
   vars:
-    - centos_role: ipsilon
+    - rocky_role: ipsilon
     - role_backup_folders:
-        - /var/lib/ipsilon 
+        - /var/lib/ipsilon
   tags:
     - backup
