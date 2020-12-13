@@ -80,7 +80,7 @@
   template:
     src: 02_ipsilon_vhost.conf.j2
     dest: /etc/httpd/conf.d/02_ipsilon_vhost.conf
-    mode: 0644
+    mode: '0644'
   notify:
     - restart_httpd
 
@@ -88,7 +88,9 @@
   template:
     src: "{{ item }}.j2"
     dest: "/etc/httpd/conf.d/{{ item }}"
-    mode: 0644
+    owner: root
+    group: root
+    mode: '0644'
   notify:
     - restart_httpd
   with_items:
@@ -110,7 +112,9 @@
   copy:
     src: rocky_logo.png
     dest: "{{ item }}"
-    mode: 0644
+    owner: root
+    group: root
+    mode: '0644'
   with_items:
     - /usr/share/ipsilon/ui/img/brand-lg.png
     - /usr/share/ipsilon/ui/img/brand.png
@@ -119,7 +123,7 @@
   copy:
     src: genkey.py
     dest: /var/lib/ipsilon/idp/genkey.py
-    mode: 0755
+    mode: '0755'
 
 - name: Ensuring backup user and jobs
   include_role:
