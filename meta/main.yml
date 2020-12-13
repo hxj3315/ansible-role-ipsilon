@@ -1,7 +1,8 @@
+---
 galaxy_info:
   author: Louis Abel
-  description: ipsilon installer
-  company: Rocky Linux
+  description: Ipsilon installer for Rocky Linux Infrastructure
+  company: "Rocky Linux"
   license: MIT
   min_ansible_version: 2.8
   platforms:
