@@ -2,9 +2,14 @@
 # Defaults variables for role ipsilon
 
 # mysql settings
-ipsilon_db_user: ipsilon
-ipsilon_db_pass: ThisIsNotThePassword
-ipsilon_db_name: ipsilon
+ipsilon_databases:
+  - name: ipsilon
+
+ipsilon_database_users:
+  - name: ipsilon
+    host: "%"
+    pasword: ThisIsNotThePassword
+    priv: "ipsilon.*:ALL"
 
 # Httpd settings
 # TLS and hostname
@@ -18,8 +23,8 @@ ipsilon_packages:
   - ipsilon-openid
   - ipsilon-saml2
   - ipsilon-openidc
-  - MySQL-python
-  - python-setuptools
+  - python3-mysql
+  - python3-setuptools
 
 # Important to end the fas backend url with /
 # Note: We do not use FAS

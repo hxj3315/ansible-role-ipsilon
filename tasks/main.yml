@@ -1,18 +1,7 @@
 ---
 # Defaults tasks for role ipsilon
 - include_role:
-    name: mysql
-
-- name: Creating mandatory (local) DB
-  include_role:
-    name: mysql
-    tasks_from: db
-  vars:
-    mysql_db_user: "{{ ipsilon_db_user }}"
-    mysql_db_pass: "{{ ipsilon_db_pass }}"
-    mysql_db_name: "{{ ipsilon_db_name }}"
-  tags:
-    - db
+    name: geerlingguy.mysql
 
 # TODO: Get the repo
 - name: Installing required packages
