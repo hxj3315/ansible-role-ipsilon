@@ -6,7 +6,7 @@
 # TODO: Get the repo
 - name: Installing required packages
   yum:
-    name: "{{ ipsilon_packages}}"
+    name: "{{ ipsilon_packages }}"
     state: latest
   tags:
     - packages
@@ -70,6 +70,7 @@
     - init
     - admins
 
+####### CHANGE #######
 - name: Configuring httpd
   import_role:
     name: httpd
@@ -107,6 +108,7 @@
   tags:
     - tls
   when: ipsilon_httpd_tls
+####### CHANGE #######
 
 - name: Branding ipsilon with logo
   copy:
@@ -125,13 +127,14 @@
     dest: /var/lib/ipsilon/idp/genkey.py
     mode: '0755'
 
-- name: Ensuring backup user and jobs
-  include_role:
-    name: rocky-backup
-    tasks_from: client
-  vars:
-    - rocky_role: ipsilon
-    - role_backup_folders:
-        - /var/lib/ipsilon
-  tags:
-    - backup
+# We'll get back to this soon
+#  name: Ensuring backup user and jobs
+#  include_role:
+#    name: rocky-backup
+#    tasks_from: client
+#  vars:
+#    - rocky_role: ipsilon
+#    - role_backup_folders:
+#        - /var/lib/ipsilon
+#  tags:
+#    - backup

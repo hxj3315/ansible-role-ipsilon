@@ -15,3 +15,4 @@ galaxy_info:
     - idp
 dependencies:
   - geerlingguy.mysql
+  - geerlingguy.apache
