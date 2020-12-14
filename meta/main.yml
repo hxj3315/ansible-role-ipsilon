@@ -16,4 +16,4 @@ galaxy_info:
 dependencies:
   - geerlingguy.mysql
   - geerlingguy.apache
-  - community.mysql.mysql_db
+  - community.mysql
