@@ -3,7 +3,6 @@
 - include_role:
     name: geerlingguy.mysql
 
-# TODO: Get the repo
 - name: Installing required packages
   yum:
     name: "{{ ipsilon_packages }}"
@@ -43,7 +42,7 @@
     - init
 
 - name: Configuring ipsilon DB from template
-  mysql_db:
+  community.mysql.mysql_db:
     name: "{{ ipsilon_db_name }}"
     state: import
     target: /etc/ipsilon/idp/ipsilon-db-cfg.sql
@@ -61,7 +60,7 @@
     - admins
 
 - name: Configuring ipsilon admins
-  mysql_db:
+  community.mysql.mysql_db:
     name: "{{ ipsilon_db_name }}"
     state: import
     target: /etc/ipsilon/idp/ipsilon-admins.sql
@@ -70,45 +69,9 @@
     - init
     - admins
 
-####### CHANGE #######
 - name: Configuring httpd
   import_role:
-    name: httpd
-  vars:
-    httpd_tls: "{{ ipsilon_httpd_tls }}"
-
-- name: Configuring httpd vhost
-  template:
-    src: 02_ipsilon_vhost.conf.j2
-    dest: /etc/httpd/conf.d/02_ipsilon_vhost.conf
-    mode: '0644'
-  notify:
-    - restart_httpd
-
-- name: Configuring https
-  template:
-    src: "{{ item }}.j2"
-    dest: "/etc/httpd/conf.d/{{ item }}"
-    owner: root
-    group: root
-    mode: '0644'
-  notify:
-    - restart_httpd
-  with_items:
-    - ssl-ipsilon-vhost.conf
-  when: ipsilon_httpd_tls
-
-- import_role:
-    name: httpd
-    tasks_from: pki-tls
-  vars:
-    pki_hostname: "{{ ipsilon_httpd_hostname }}"
-  notify:
-    - restart_httpd
-  tags:
-    - tls
-  when: ipsilon_httpd_tls
-####### CHANGE #######
+    name: geerlingguy.apache
 
 - name: Branding ipsilon with logo
   copy:
