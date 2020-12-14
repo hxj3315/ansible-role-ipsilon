@@ -2,4 +2,5 @@
 roles:
   - geerlingguy.mysql
   - geerlingguy.apache
-  - community.mysql.mysql_db
+collections:
+  - community.mysql
