@@ -54,6 +54,9 @@
   template:
     src: ipsilon-admins.sql.j2
     dest: /etc/ipsilon/idp/ipsilon-admins.sql
+    owner: root
+    group: root
+    mode: '0644'
   register: ipsilon_admins
   tags:
     - init
