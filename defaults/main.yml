@@ -68,9 +68,12 @@ apache_vhosts:
 ipsilon_packages:
   - ipsilon
   - ipsilon-authfas
+  - ipsilon-infofas
   - ipsilon-openid
   - ipsilon-saml2
   - ipsilon-openidc
+  - ipsilon-tools-ipa
+  - ipsilon-infosssd
   - python3-mysql
   - python3-setuptools
 
