@@ -28,4 +28,3 @@ These roles are declared in our [requirements.yml](https://github.com/rocky-linu
 
 ### License
 MIT (see [LICENSE](LICENSE) file)
-

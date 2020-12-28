@@ -18,4 +18,3 @@ if not os.path.exists('/var/lib/ipsilon/idp/openidc'):
 
 with open('/var/lib/ipsilon/idp/openidc/openidc.key', 'w') as m:
     m.write(keyset.export())
-
