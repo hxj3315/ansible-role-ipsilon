@@ -28,6 +28,18 @@
   tags:
     - init
 
+- name: Ipsilon settings
+  template:
+    src: ipsilon-db-cfg.sql.j2
+    dest: /etc/ipsilon/idp/ipsilon-db-cfg.sql
+    owner: root
+    group: root
+    mode: '0644'
+  register: ipsilon_config
+  tags:
+    - init
+    - config
+
 - name: Ipsilon admins template
   template:
     src: ipsilon-admins.sql.j2
@@ -40,9 +52,15 @@
     - init
     - admins
 
+- name: Configure ipsilon
+  shell: "set -o pipefail && sqlite3 /var/lib/ipsilon/idp/adminconfig.sqlite < /etc/ipsilon/idp/ipsilon-db-cfg.sql"
+  changed_when: "1 != 1"
+  when: ipsilon_config is changed
+
 - name: Configure ipsilon admins
   shell: "set -o pipefail && sqlite3 /var/lib/ipsilon/idp/userprefs.sqlite < /etc/ipsilon/idp/ipsilon-admins.sql"
   changed_when: "1 != 1"
+  when: ipsilon_admins is changed
 
 - name: Configuring httpd
   import_role:
