@@ -77,6 +77,8 @@ ipsilon_packages:
   - ipsilon-infosssd
   - python3-setuptools
   - sqlite
+  - httpd
+  - mod_ssl
 
 # Important to end the fas backend url with /
 # Note: We do not use FAS
