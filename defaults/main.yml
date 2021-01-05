@@ -75,8 +75,8 @@ ipsilon_packages:
   - ipsilon-openidc
   - ipsilon-tools-ipa
   - ipsilon-infosssd
-  - python3-mysql
   - python3-setuptools
+  - sqlite
 
 # Important to end the fas backend url with /
 # Note: We do not use FAS
