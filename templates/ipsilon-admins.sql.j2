@@ -1,3 +1,4 @@
+DELETE FROM users WHERE value = 1;
 {% for admin in ipsilon_admins %}
-insert ignore into users (name,option,value) values ('{{ admin }}','is_admin','1');
+INSERT INTO users (name,option,value) VALUES('{{ admin }}','is_admin','1');
 {% endfor %}

@@ -28,24 +28,6 @@
   tags:
     - init
 
-- name: Importing template for ipsilon DB
-  template:
-    src: ipsilon-db-cfg.sql.j2
-    dest: /etc/ipsilon/idp/ipsilon-db-cfg.sql
-  register: ipsilon_db_cfg
-  when: ipsilon_install is changed
-  tags:
-    - init
-
-- name: Configuring ipsilon DB from template
-  community.mysql.mysql_db:
-    name: "{{ ipsilon_db_name }}"
-    state: import
-    target: /etc/ipsilon/idp/ipsilon-db-cfg.sql
-  when: ipsilon_db_cfg is changed
-  tags:
-    - init
-
 - name: Ipsilon admins template
   template:
     src: ipsilon-admins.sql.j2
@@ -58,15 +40,9 @@
     - init
     - admins
 
-# name: Configuring ipsilon admins
-# community.mysql.mysql_db:
-#   name: "{{ ipsilon_db_name }}"
-#   state: import
-#   target: /etc/ipsilon/idp/ipsilon-admins.sql
-# when: ipsilon_admins is changed
-# tags:
-#   - init
-#   - admins
+- name: Configure ipsilon admins
+  shell: "set -o pipefail && sqlite3 /var/lib/ipsilon/idp/userprefs.sqlite < /etc/ipsilon/idp/ipsilon-admins.sql"
+  changed_when: "1 != 1"
 
 - name: Configuring httpd
   import_role:
