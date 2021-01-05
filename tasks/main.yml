@@ -1,8 +1,5 @@
 ---
 # Defaults tasks for role ipsilon
-- include_role:
-    name: geerlingguy.mysql
-
 - name: Installing required packages
   yum:
     name: "{{ ipsilon_packages }}"
@@ -18,12 +15,11 @@
     --secure yes
     --openid yes
     --saml2 yes
-    --openidc no
-    --fas no
+    --openidc yes
+    --fas yes
     --ipa yes
     --info-sssd yes
     --form yes
-    --database-url mysql://{{ ipsilon_db_user }}:{{ ipsilon_db_password }}@localhost/{{ ipsilon_db_name }}
     --hostname {{ ipsilon_httpd_hostname }}
   args:
     creates: /etc/ipsilon/idp/ipsilon.conf
@@ -62,19 +58,20 @@
     - init
     - admins
 
-- name: Configuring ipsilon admins
-  community.mysql.mysql_db:
-    name: "{{ ipsilon_db_name }}"
-    state: import
-    target: /etc/ipsilon/idp/ipsilon-admins.sql
-  when: ipsilon_admins is changed
-  tags:
-    - init
-    - admins
+# name: Configuring ipsilon admins
+# community.mysql.mysql_db:
+#   name: "{{ ipsilon_db_name }}"
+#   state: import
+#   target: /etc/ipsilon/idp/ipsilon-admins.sql
+# when: ipsilon_admins is changed
+# tags:
+#   - init
+#   - admins
 
 - name: Configuring httpd
   import_role:
     name: geerlingguy.apache
+  when: apache_configure
 
 - name: Branding ipsilon with logo
   copy:

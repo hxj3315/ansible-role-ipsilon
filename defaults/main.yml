@@ -17,6 +17,7 @@ ipsilon_db_password: ThisIsNotThePassword
 # Httpd settings
 # These are default settings. You are encouraged to build your own in a
 # playbook.
+apache_configure: false
 apache_listen_port: 80
 apache_listen_port_ssl: 443
 apache_create_vhosts: true
