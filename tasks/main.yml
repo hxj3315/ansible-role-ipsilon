@@ -62,11 +62,6 @@
   changed_when: "1 != 1"
   when: ipsilon_admins is changed
 
-- name: Configuring httpd
-  import_role:
-    name: geerlingguy.apache
-  when: apache_configure
-
 - name: Branding ipsilon with logo
   copy:
     src: rocky_logo.png
