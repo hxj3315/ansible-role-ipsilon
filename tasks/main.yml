@@ -20,6 +20,7 @@
     --ipa yes
     --info-sssd yes
     --form yes
+    --gssapi-httpd-keytab /etc/httpd.keytab
     --hostname {{ ipsilon_httpd_hostname }}
   args:
     creates: /etc/ipsilon/idp/ipsilon.conf
