@@ -13,5 +13,4 @@ galaxy_info:
     - ipsilon
     - identity
     - idp
-dependencies:
-  - geerlingguy.apache
+dependencies: []
