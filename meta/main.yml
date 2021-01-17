@@ -14,5 +14,4 @@ galaxy_info:
     - identity
     - idp
 dependencies:
-  - geerlingguy.mysql
   - geerlingguy.apache
