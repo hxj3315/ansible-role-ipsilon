@@ -25,4 +25,7 @@ class OpenidCExtension(OpenidCExtensionBase):
         'https://mbs.rockylinux.org/oidc/mbs-submit-build': {
             'display_name': 'mbs'
         }
+        'https://id.fedoraproject.org/scope/groups': {
+            'display_name': 'groups'
+        }
     }
