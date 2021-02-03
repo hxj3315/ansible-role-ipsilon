@@ -93,3 +93,10 @@ ipsilon_admins:
 
 ipsilon_openid_trusted_roots:
   - https://git.rockylinux.org
+
+ipsilon_openidc_scopes:
+  - ipsilon
+  - rocky
+
+ipsilon_openidc_custom_scopes:
+  - rocky

@@ -100,11 +100,13 @@
 
 - name: Deploy Scopes
   copy:
-    src: rocky.py
-    dest: /usr/lib/python3.6/site-packages/ipsilon/providers/openidc/plugins/rocky.py
+    src: "{{ item }}.py"
+    dest: "/usr/lib/python3.6/site-packages/ipsilon/providers/openidc/plugins/{{ item }}.py"
     mode: '0644'
     user: root
     group: root
+  with_items: ipsilon_openidc_custom_scopes
+  notify: reload_httpd
 
 - name: "Configure SSSD part 1"
   replace:
