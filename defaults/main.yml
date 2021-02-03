@@ -75,10 +75,14 @@ ipsilon_packages:
   - ipsilon-openidc
   - ipsilon-tools-ipa
   - ipsilon-infosssd
+  - ipsilon-authgssapi
   - python3-setuptools
   - sqlite
   - httpd
   - mod_ssl
+  - mod_auth_openidc
+  - mod_auth_gssapi
+  - git
 
 # Important to end the fas backend url with /
 # Note: We do not use FAS
@@ -86,3 +90,6 @@ ipsilon_fas_backend: https://accounts.rockylinux.org/
 ipsilon_admins:
   - admin
   - label
+
+ipsilon_openid_trusted_roots:
+  - https://git.rockylinux.org

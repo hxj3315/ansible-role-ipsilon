@@ -1,7 +1,9 @@
-update provider_config set value='Teams, Attribute Exchange, Simple Registration' where name='openid' and option='enabled extensions';
+update provider_config set value='Teams, Attribute Exchange, CLAs, Simple Registration, API' where name='openid' and option='enabled extensions';
 insert into provider_config values ('openid','default allowed attributes','["*"]');
 insert into provider_config values ('openid','default attribute mapping','[["*", "*"]]');
+update provider_config set value='[["*", "*"], ["_groups", "groups"], [["_extras", "cla"], "cla"], ["fullname", "name"], ["_username", "nickname"], ["_username", "preferred_username"], ["fasIRCNick", "ircnick"], ["fasLocale", "locale"], ["fasTimeZone", "zoneinfo"], ["fasTimeZone", "timezone"], ["fasWebsiteURL", "website"], ["fasGPGKeyId", "gpg_keyid"], ["ipaSshPubKey", "ssh_key"], ["fasIsPrivate", "privacy"], ["fullname", "human_name"]]' where option='default attribute mapping';
 insert into provider_config values ('openid','trusted roots','');
+update provider_config set value='{% for x in ipsilon_openid_trusted_roots %}{{ x }},{% endfor %}' where name='openid' and option='trusted roots';
 insert into provider_config values ('openid','untrusted roots','');
 insert into login_config values ('fas','FAS url','{{ ipsilon_fas_backend }}');
 insert into login_config values ('fas','help text','Login with your {{ ipsilon_fas_backend }} credentials');

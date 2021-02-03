@@ -1,1 +1,6 @@
+---
 # Defaults handlers for role ipsilon
+- name: restart_sssd
+  service:
+    name: sssd
+    state: restarted

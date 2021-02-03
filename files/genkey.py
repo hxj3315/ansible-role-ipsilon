@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#!/usr/bin/python3
 import time
 import os.path
 
@@ -13,9 +13,6 @@ rsasig = JWK(generate='RSA', size=2048, use='enc',
              kid='%s-enc' % keyid)
 keyset.add(rsasig)
 
-if not os.path.exists('/var/lib/ipsilon/idp/openidc'):
-  os.makedirs('/var/lib/ipsilon/idp/openidc')
-
-with open('/var/lib/ipsilon/idp/openidc/openidc.key', 'w') as m:
+with open('/etc/ipsilon/openidc.key', 'w') as m:
     m.write(keyset.export())
 
