@@ -5,6 +5,11 @@ update provider_config set value='[["*", "*"], ["_groups", "groups"], [["_extras
 insert into provider_config values ('openid','trusted roots','');
 update provider_config set value='{% for x in ipsilon_openid_trusted_roots %}{{ x }},{% endfor %}' where name='openid' and option='trusted roots';
 insert into provider_config values ('openid','untrusted roots','');
+update provider_config set value='20210203-sig' where name='openidc' and option='idp sig key id';
+update provider_config set value='{{ idp_sig_subject_salt_openidc }}' where name='openidc' and option='idp subject salt';
+update provider_config set value='https://accounts.rockylinux.org/idp/openid/id/%(username)s' where name='openid' and option='identity url template';
+update provider_config set value='{{ idp_sig_subject_salt_saml }}' where name='saml2' and option='idp nameid salt';
+update login_config set value='gssapi,form,fas' where name='global' and option='enabled';
 insert into login_config values ('fas','FAS url','{{ ipsilon_fas_backend }}');
 insert into login_config values ('fas','help text','Login with your {{ ipsilon_fas_backend }} credentials');
 insert into login_config values ('fas','username text','ACO username');
