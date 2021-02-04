@@ -108,6 +108,26 @@
   with_items: ipsilon_openidc_custom_scopes
   notify: reload_httpd
 
+- name: Deploy httpd configuration for primary node
+  copy:
+    src: idp-primary.conf
+    dest: /etc/ipsilon/idp/idp.conf
+    mode: '0600'
+    user: ipsilon
+    group: ipsilon
+  notify: reload_httpd
+  when: "'001' in inventory_hostname"
+
+- name: Deploy httpd configuration for primary node
+  copy:
+    src: idp-secondary.conf
+    dest: /etc/ipsilon/idp/idp.conf
+    mode: '0600'
+    user: ipsilon
+    group: ipsilon
+  notify: reload_httpd
+  when: "'001' not in inventory_hostname"
+
 - name: "Configure SSSD part 1"
   replace:
     path: /etc/sssd/sssd.conf
