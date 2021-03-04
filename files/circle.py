@@ -4,8 +4,8 @@ from ipsilon.providers.openidc.plugins.common import OpenidCExtensionBase
 
 
 class OpenidCExtension(OpenidCExtensionBase):
-    name = 'rocky'
-    display_name = 'Rocky Tokens'
+    name = 'circle'
+    display_name = 'Circle Tokens'
     scopes = {
         'openid': {
             'display_name': 'openid',
@@ -22,7 +22,7 @@ class OpenidCExtension(OpenidCExtensionBase):
         'phone': {
             'display_name': 'phone',
         },
-        'https://mbs.rockylinux.org/oidc/mbs-submit-build': {
+        'https://mbs.cclinux.org/oidc/mbs-submit-build': {
             'display_name': 'mbs',
         },
         'https://id.fedoraproject.org/scope/groups': {

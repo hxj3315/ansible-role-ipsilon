@@ -29,7 +29,7 @@ certificate_key_file: /etc/pki/tls/private/localhost.key
 apache_vhosts:
   - servername: "{{ inventory_hostname }}"
     documentroot: /var/www/html
-    serveradmin: identitymanagement@rockylinux.org
+    serveradmin: identitymanagement@cclinux.org
     extra_parameters: |
       CustomLog logs/{{ inventory_hostname }}_access.log combined
       ErrorLog logs/{{ inventory_hostname }}_error.log
@@ -44,7 +44,7 @@ apache_vhosts:
       RewriteRule ^/?(.*) https://{{ inventory_hostname }}/$1 [R,L]
   - servername: "{{ inventory_hostname }}"
     documentroot: /var/www/html
-    serveradmin: identitymanagement@rockylinux.org
+    serveradmin: identitymanagement@cclinux.org
     extra_parameters: |
       RewriteEngine On
       RewriteCond $1 !^idp
@@ -63,7 +63,7 @@ apache_vhosts:
         SSLOptions +StdEnvVars
       </Directory>
       SetEnvIf User-Agent ".*MSIE.*"  nokeepalive ssl-unclean-shutdown downgrade-1.0 force-response-1.0
-      CustomLog logs/ssl-seven.rockylinux.org_request.log "%t %h %{SSL_PROTOCOL}x %{SSL_CIPHER}x \"%r\" %b"
+      CustomLog logs/ssl-seven.cclinux.org_request.log "%t %h %{SSL_PROTOCOL}x %{SSL_CIPHER}x \"%r\" %b"
 
 # The list of ipsilon packages
 ipsilon_packages:
@@ -86,17 +86,17 @@ ipsilon_packages:
 
 # Important to end the fas backend url with /
 # Note: We do not use FAS
-ipsilon_fas_backend: https://accounts.rockylinux.org/
+ipsilon_fas_backend: https://accounts.cclinux.org/
 ipsilon_admins:
   - admin
   - label
 
 ipsilon_openid_trusted_roots:
-  - https://git.rockylinux.org
+  - https://git.cclinux.org
 
 ipsilon_openidc_scopes:
   - ipsilon
-  - rocky
+  - circle
 
 ipsilon_openidc_custom_scopes:
-  - rocky
+  - circle

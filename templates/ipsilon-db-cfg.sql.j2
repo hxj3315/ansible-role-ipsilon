@@ -7,9 +7,9 @@ update provider_config set value='{% for x in ipsilon_openid_trusted_roots %}{{ 
 insert into provider_config values ('openid','untrusted roots','');
 update provider_config set value='20210203-sig' where name='openidc' and option='idp sig key id';
 update provider_config set value='{{ ipsilon_sig_subject_salt_openidc }}' where name='openidc' and option='idp subject salt';
-update provider_config set value='https://accounts.rockylinux.org/idp/openid/id/%(username)s' where name='openid' and option='identity url template';
+update provider_config set value='https://accounts.cclinux.org/idp/openid/id/%(username)s' where name='openid' and option='identity url template';
 update provider_config set value='{{ ipsilon_sig_subject_salt_saml }}' where name='saml2' and option='idp nameid salt';
-update provider_config set value='rockylinux.org' where name='saml2' and option='default email domain';
+update provider_config set value='cclinux.org' where name='saml2' and option='default email domain';
 insert into provider_config values ('openidc','enabled extensions','ipsilon');
 update provider_config set value='{% for x in ipsilon_openidc_scopes %}{{ x }},{% endfor %}' where name='openidc' and option='enabled extensions';
 update login_config set value='gssapi,form,fas' where name='global' and option='enabled';

@@ -1,5 +1,5 @@
 ## Ansible Role: ipsilon
-This role is used in the Rocky Linux Infrastructure. It is used to install and configure ipsilon with optional openidc support.
+This role is used in the Circle Linux Infrastructure. It is used to install and configure ipsilon with optional openidc support.
 
 ### Package Information
 If you are using this role, it designed to work with Enterprise Linux 8. It expects that the ipsilon packages are available. The packages not in base or in epel. Your system will need to use a copr repo in your playbook. See the example below.
@@ -24,7 +24,7 @@ This role may depend on some other roles, either statically defined, or dynamica
   * See [meta/main.yml](meta/main.yml)
   * Or each <task>.yml under tasks folder for included/imported roles
 
-These roles are declared in our [requirements.yml](https://github.com/rocky-linux/infrastructure/blob/main/ansible/playbooks/requirements.yml)
+These roles are declared in our [requirements.yml](https://github.com/circle-linux/infrastructure/blob/main/ansible/playbooks/requirements.yml)
 
 ### License
 MIT (see [LICENSE](LICENSE) file)

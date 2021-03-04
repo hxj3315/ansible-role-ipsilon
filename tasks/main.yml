@@ -65,7 +65,7 @@
 
 - name: Branding ipsilon with logo
   copy:
-    src: rocky_logo.png
+    src: circle_logo.png
     dest: "{{ item }}"
     owner: root
     group: root
