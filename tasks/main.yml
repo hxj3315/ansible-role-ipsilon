@@ -87,7 +87,7 @@
     src: genkey.py
     dest: /var/lib/ipsilon/idp/genkey.py
     mode: '0755'
-    user: ipsilon
+    owner: ipsilon
     group: ipsilon
 
 - name: Generate oidc token sccript
@@ -95,7 +95,7 @@
     src: generate-oidc-token
     dest: /var/lib/ipsilon/idp/generate-oidc-token
     mode: '0755'
-    user: ipsilon
+    owner: ipsilon
     group: ipsilon
 
 - name: Deploy Scopes
@@ -103,7 +103,7 @@
     src: "{{ item }}.py"
     dest: "/usr/lib/python3.6/site-packages/ipsilon/providers/openidc/plugins/{{ item }}.py"
     mode: '0644'
-    user: root
+    owner: root
     group: root
   with_items: ipsilon_openidc_custom_scopes
   notify: reload_httpd
@@ -113,7 +113,7 @@
     src: idp-primary.conf
     dest: /etc/ipsilon/idp/idp.conf
     mode: '0600'
-    user: ipsilon
+    owner: ipsilon
     group: ipsilon
   notify: reload_httpd
   when: "'001' in inventory_hostname"
@@ -123,7 +123,7 @@
     src: idp-secondary.conf
     dest: /etc/ipsilon/idp/idp.conf
     mode: '0600'
-    user: ipsilon
+    owner: ipsilon
     group: ipsilon
   notify: reload_httpd
   when: "'001' not in inventory_hostname"
